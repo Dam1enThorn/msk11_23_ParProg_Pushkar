@@ -1,40 +1,34 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 
 int* createDynamicArray(int size) {
-    // Выделяем память под динамический массив
     int* array = (int*)malloc(size * sizeof(int));
-    
     return array;
 }
+
 void saveArray(const char* filename, int* array, int size) {
-    // Открываем файл 
     FILE* file = fopen(filename, "wb");
     
-    // Проверяем, удалось ли открыть файл
     if (file == NULL) {
         printf("Ошибка: Не удалось открыть файл для записи.\n");
         return;
     }
     
-    // Записываем массив в файл
     size_t elements_written = fwrite(array, sizeof(int), size, file);
     
-    // Проверяем, удалась ли запись
     if (elements_written != size) {
         printf("Ошибка при записи массива в файл.\n");
     } else {
         printf("Массив успешно записан в файл '%s'.\n", filename);
     }
     
-    // Закрываем файл
     fclose(file);
 }
 
 int main() {
     int size;
     
-    // Получаем размер массива от пользователя
     printf("Введите размер массива: ");
     scanf("%d", &size);
     
@@ -50,12 +44,19 @@ int main() {
         printf("%d ", dynamicArray[i]);
     }
     printf("\n");
-    
-    // Сохраняем массив в двоичный файл
+
+    // Измеряем время выполнения функции saveArray
+    clock_t start_time = clock();
+
     saveArray("my_array.bin", dynamicArray, size);
-    
+
+    // Измеряем время выполнения
+    clock_t end_time = clock();
+    double execution_time = (double)(end_time - start_time) / CLOCKS_PER_SEC;
+
+    printf("Время выполнения saveArray: %f секунд\n", execution_time);
+
     free(dynamicArray);
     
     return 0;
 }
-
