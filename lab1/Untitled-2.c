@@ -25,6 +25,15 @@ void saveArray(const char* filename, int* array, int size) {
     
     fclose(file);
 }
+void findDiaposon(int *array, int size, int min, int max) {
+    printf("Индексы элементов в диапазоне [%d, %d]: ", min, max);
+    for (int i = 0; i < size; i++) {
+        if (array[i] >= min && array[i] <= max) {
+            printf("%d ", array[i]);
+        }
+    }
+    printf("\n");
+}
 
 int main() {
     int size;
@@ -44,17 +53,31 @@ int main() {
         printf("%d ", dynamicArray[i]);
     }
     printf("\n");
+    
+    int min, max;
+        printf("Введите минимальное и максимальное значение для поиска: ");
+        scanf("%d %d", &min, &max);
 
-    // Измеряем время выполнения функции saveArray
-    clock_t start_time = clock();
+        // Измеряем время выполнения функции
+        clock_t start_time = clock();
 
+        findDiaposon(dynamicArray, size, min, max);
     saveArray("my_array.bin", dynamicArray, size);
 
     // Измеряем время выполнения
     clock_t end_time = clock();
-    double execution_time = (double)(end_time - start_time) / CLOCKS_PER_SEC;
+    double execution_time2 = (double)(end_time - start_time) / CLOCKS_PER_SEC;
 
-    printf("Время выполнения saveArray: %f секунд\n", execution_time);
+    printf("Время выполнения saveArray: %f секунд\n", execution_time2);
+    // Сохраняем время выполнения в файл
+    FILE *time_file = fopen("execution_time2.txt", "a");
+    if (time_file != NULL) {
+        fprintf(time_file, "Время выполнения программы: %f секунд\n", execution_time2);
+        fclose(time_file);
+        printf("Время выполнения сохранено в файл 'execution_time2.txt'\n");
+    } else {
+        printf("Не удалось открыть файл для сохранения времени выполнения.\n");
+    }
 
     free(dynamicArray);
     

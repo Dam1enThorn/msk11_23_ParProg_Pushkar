@@ -50,8 +50,17 @@ int main() {
      // Измеряем время выполнения программы
     clock_t end_time = clock();
    // Вычисляем время выполнения в секундах
-    double execution_time = (double)(end_time - start_time) / CLOCKS_PER_SEC;
+    double execution_time3 = (double)(end_time - start_time) / CLOCKS_PER_SEC;
 
-    printf("Время выполнения программы: %f секунд\n", execution_time);
+    printf("Время выполнения программы: %f секунд\n", execution_time3);
+    // Сохраняем время выполнения в файл
+    FILE *time_file = fopen("execution_time3.txt", "a");
+    if (time_file != NULL) {
+        fprintf(time_file, "Время выполнения программы: %f секунд\n", execution_time3);
+        fclose(time_file);
+        printf("Время выполнения сохранено в файл 'execution_time3.txt'\n");
+    } else {
+        printf("Не удалось открыть файл для сохранения времени выполнения.\n");
+    }
     return 0;
 }

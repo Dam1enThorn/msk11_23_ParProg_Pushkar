@@ -31,5 +31,15 @@ int main() {
 
     printf("Время выполнения программы: %f секунд\n", execution_time);
 
+    // Сохраняем время выполнения в файл
+    FILE *time_file = fopen("execution_time1.txt", "a");
+    if (time_file != NULL) {
+        fprintf(time_file, "Время выполнения программы: %f секунд\n", execution_time);
+        fclose(time_file);
+        printf("Время выполнения сохранено в файл 'execution_time.txt'\n");
+    } else {
+        printf("Не удалось открыть файл для сохранения времени выполнения.\n");
+    }
+
     return 0;
 }
