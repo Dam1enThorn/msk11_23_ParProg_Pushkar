@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 
 void readArray(const char* filename) {
     // Открываем файл для чтения в двоичном режиме
@@ -42,8 +43,15 @@ void readArray(const char* filename) {
 }
 
 int main() {
+    // Измеряем время выполнения программы
+    clock_t start_time = clock();
     // Вызываем функцию для чтения массива из двоичного файла
     readArray("my_array.bin");
-    
+     // Измеряем время выполнения программы
+    clock_t end_time = clock();
+   // Вычисляем время выполнения в секундах
+    double execution_time = (double)(end_time - start_time) / CLOCKS_PER_SEC;
+
+    printf("Время выполнения программы: %f секунд\n", execution_time);
     return 0;
 }
